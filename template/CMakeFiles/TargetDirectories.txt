@@ -1,0 +1,4 @@
+/home/qhuang/templateV2/template/CMakeFiles/rebuild_cache.dir
+/home/qhuang/templateV2/template/CMakeFiles/edit_cache.dir
+/home/qhuang/templateV2/template/CMakeFiles/test.dir
+/home/qhuang/templateV2/template/CMakeFiles/ha2.dir

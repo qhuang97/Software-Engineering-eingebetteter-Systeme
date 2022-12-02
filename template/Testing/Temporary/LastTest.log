@@ -1,0 +1,1170 @@
+Start testing: Feb 14 16:30 CET
+----------------------------------------------------------
+1/34 Testing: testBewaesserungOhneRegen
+1/34 Test: testBewaesserungOhneRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testBewaesserungOhneRegen"
+Directory: /home/qhuang/templateV2/template
+"testBewaesserungOhneRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+3515 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBewaesserungOhneRegen" end time: Feb 14 16:30 CET
+"testBewaesserungOhneRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/34 Testing: testBewaesserung30Grad
+2/34 Test: testBewaesserung30Grad
+Command: "/home/qhuang/templateV2/template/ha2" "testBewaesserung30Grad"
+Directory: /home/qhuang/templateV2/template
+"testBewaesserung30Grad" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[1021 s / 34](TestBench): Setting 'temperatur'='33'
+
+1800 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBewaesserung30Grad" end time: Feb 14 16:30 CET
+"testBewaesserung30Grad" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/34 Testing: testBewaesserungMitPreRegen
+3/34 Test: testBewaesserungMitPreRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testBewaesserungMitPreRegen"
+Directory: /home/qhuang/templateV2/template
+"testBewaesserungMitPreRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[0 s / 0](TestBench): Setting 'regen'='1'
+[3 s / 3](TestBench): Setting 'regen'='0'
+
+2945 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBewaesserungMitPreRegen" end time: Feb 14 16:30 CET
+"testBewaesserungMitPreRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/34 Testing: testBewaesserungMitMidRegen
+4/34 Test: testBewaesserungMitMidRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testBewaesserungMitMidRegen"
+Directory: /home/qhuang/templateV2/template
+"testBewaesserungMitMidRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[665100 ms / 21](TestBench): Setting 'regen'='1'
+[760 s / 25](TestBench): Setting 'regen'='0'
+
+1420 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBewaesserungMitMidRegen" end time: Feb 14 16:30 CET
+"testBewaesserungMitMidRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/34 Testing: testBewaesserungMitDauerRegen
+5/34 Test: testBewaesserungMitDauerRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testBewaesserungMitDauerRegen"
+Directory: /home/qhuang/templateV2/template
+"testBewaesserungMitDauerRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'regen'='1'
+
+3601 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBewaesserungMitDauerRegen" end time: Feb 14 16:30 CET
+"testBewaesserungMitDauerRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/34 Testing: testBlattlaeuseKuerbisfeld
+6/34 Test: testBlattlaeuseKuerbisfeld
+Command: "/home/qhuang/templateV2/template/ha2" "testBlattlaeuseKuerbisfeld"
+Directory: /home/qhuang/templateV2/template
+"testBlattlaeuseKuerbisfeld" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[10 s / 3](TestBench): Setting 'kuerbisfeld_blattlaeuse'='1'
+
+10 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBlattlaeuseKuerbisfeld" end time: Feb 14 16:30 CET
+"testBlattlaeuseKuerbisfeld" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/34 Testing: testBlattlaeuseSalatfeld
+7/34 Test: testBlattlaeuseSalatfeld
+Command: "/home/qhuang/templateV2/template/ha2" "testBlattlaeuseSalatfeld"
+Directory: /home/qhuang/templateV2/template
+"testBlattlaeuseSalatfeld" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[11 s / 3](TestBench): Setting 'salatfeld_blattlaeuse'='1'
+
+11 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testBlattlaeuseSalatfeld" end time: Feb 14 16:30 CET
+"testBlattlaeuseSalatfeld" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/34 Testing: testSchneckenSalatfeld
+8/34 Test: testSchneckenSalatfeld
+Command: "/home/qhuang/templateV2/template/ha2" "testSchneckenSalatfeld"
+Directory: /home/qhuang/templateV2/template
+"testSchneckenSalatfeld" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[12 s / 3](TestBench): Setting 'salatfeld_schnecken'='1'
+
+32 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testSchneckenSalatfeld" end time: Feb 14 16:30 CET
+"testSchneckenSalatfeld" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/34 Testing: testWarnlampeAusAn
+9/34 Test: testWarnlampeAusAn
+Command: "/home/qhuang/templateV2/template/ha2" "testWarnlampeAusAn"
+Directory: /home/qhuang/templateV2/template
+"testWarnlampeAusAn" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testWarnlampeAusAn" end time: Feb 14 16:30 CET
+"testWarnlampeAusAn" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/34 Testing: testWarnlampeRegenLoop
+10/34 Test: testWarnlampeRegenLoop
+Command: "/home/qhuang/templateV2/template/ha2" "testWarnlampeRegenLoop"
+Directory: /home/qhuang/templateV2/template
+"testWarnlampeRegenLoop" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'regen'='1'
+
+950111 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testWarnlampeRegenLoop" end time: Feb 14 16:30 CET
+"testWarnlampeRegenLoop" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/34 Testing: testOverflowBauer
+11/34 Test: testOverflowBauer
+Command: "/home/qhuang/templateV2/template/ha2" "testOverflowBauer"
+Directory: /home/qhuang/templateV2/template
+"testOverflowBauer" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[475099 ms / 30](TestBench): Setting 'regen'='1'
+
+1425109 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testOverflowBauer" end time: Feb 14 16:30 CET
+"testOverflowBauer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/34 Testing: testDuengungOhneRegen
+12/34 Test: testDuengungOhneRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testDuengungOhneRegen"
+Directory: /home/qhuang/templateV2/template
+"testDuengungOhneRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+3600 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testDuengungOhneRegen" end time: Feb 14 16:30 CET
+"testDuengungOhneRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/34 Testing: testDuengungMitRegen
+13/34 Test: testDuengungMitRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testDuengungMitRegen"
+Directory: /home/qhuang/templateV2/template
+"testDuengungMitRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[1500100 ms / 50](TestBench): Setting 'regen'='1'
+
+2400100 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testDuengungMitRegen" end time: Feb 14 16:30 CET
+"testDuengungMitRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/34 Testing: testDuengungMitDauerRegen
+14/34 Test: testDuengungMitDauerRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testDuengungMitDauerRegen"
+Directory: /home/qhuang/templateV2/template
+"testDuengungMitDauerRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'regen'='1'
+
+1500100 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testDuengungMitDauerRegen" end time: Feb 14 16:30 CET
+"testDuengungMitDauerRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/34 Testing: testDuengungNachRegen
+15/34 Test: testDuengungNachRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testDuengungNachRegen"
+Directory: /home/qhuang/templateV2/template
+"testDuengungNachRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[0 s / 0](TestBench): Setting 'regen'='1'
+[901 s / 25](TestBench): Setting 'regen'='0'
+
+1680 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testDuengungNachRegen" end time: Feb 14 16:30 CET
+"testDuengungNachRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/34 Testing: testTemperaturUeber30GradSonnig
+16/34 Test: testTemperaturUeber30GradSonnig
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUeber30GradSonnig"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUeber30GradSonnig" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'temperatur'='31'
+[200 ms / 5](TestBench): Setting 'wetter'='0'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUeber30GradSonnig" end time: Feb 14 16:30 CET
+"testTemperaturUeber30GradSonnig" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/34 Testing: testTemperaturUeber30GradRegen
+17/34 Test: testTemperaturUeber30GradRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUeber30GradRegen"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUeber30GradRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'temperatur'='31'
+[200 ms / 5](TestBench): Setting 'regen'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUeber30GradRegen" end time: Feb 14 16:30 CET
+"testTemperaturUeber30GradRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/34 Testing: testTemperaturUeber30GradBewoelkt
+18/34 Test: testTemperaturUeber30GradBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUeber30GradBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUeber30GradBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'temperatur'='31'
+[200 ms / 5](TestBench): Setting 'wetter'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUeber30GradBewoelkt" end time: Feb 14 16:30 CET
+"testTemperaturUeber30GradBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/34 Testing: testTemperaturUeber30GradStarkBewoelkt
+19/34 Test: testTemperaturUeber30GradStarkBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUeber30GradStarkBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUeber30GradStarkBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'temperatur'='31'
+[200 ms / 5](TestBench): Setting 'wetter'='2'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUeber30GradStarkBewoelkt" end time: Feb 14 16:30 CET
+"testTemperaturUeber30GradStarkBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/34 Testing: testTemperaturUeber30GradDunkel
+20/34 Test: testTemperaturUeber30GradDunkel
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUeber30GradDunkel"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUeber30GradDunkel" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'temperatur'='31'
+[200 ms / 5](TestBench): Setting 'wetter'='3'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUeber30GradDunkel" end time: Feb 14 16:30 CET
+"testTemperaturUeber30GradDunkel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/34 Testing: testTemperaturUnter30GradSonnig
+21/34 Test: testTemperaturUnter30GradSonnig
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUnter30GradSonnig"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUnter30GradSonnig" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='0'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUnter30GradSonnig" end time: Feb 14 16:30 CET
+"testTemperaturUnter30GradSonnig" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/34 Testing: testTemperaturUnter30GradRegen
+22/34 Test: testTemperaturUnter30GradRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUnter30GradRegen"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUnter30GradRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'regen'='1'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUnter30GradRegen" end time: Feb 14 16:30 CET
+"testTemperaturUnter30GradRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/34 Testing: testTemperaturUnter30GradBewoelkt
+23/34 Test: testTemperaturUnter30GradBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUnter30GradBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUnter30GradBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='1'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUnter30GradBewoelkt" end time: Feb 14 16:30 CET
+"testTemperaturUnter30GradBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/34 Testing: testTemperaturUnter30GradStarkBewoelkt
+24/34 Test: testTemperaturUnter30GradStarkBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUnter30GradStarkBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUnter30GradStarkBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='2'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUnter30GradStarkBewoelkt" end time: Feb 14 16:30 CET
+"testTemperaturUnter30GradStarkBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/34 Testing: testTemperaturUnter30GradDunkel
+25/34 Test: testTemperaturUnter30GradDunkel
+Command: "/home/qhuang/templateV2/template/ha2" "testTemperaturUnter30GradDunkel"
+Directory: /home/qhuang/templateV2/template
+"testTemperaturUnter30GradDunkel" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='3'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTemperaturUnter30GradDunkel" end time: Feb 14 16:30 CET
+"testTemperaturUnter30GradDunkel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/34 Testing: testLampeOhneRegenSonnig
+26/34 Test: testLampeOhneRegenSonnig
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeOhneRegenSonnig"
+Directory: /home/qhuang/templateV2/template
+"testLampeOhneRegenSonnig" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='0'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeOhneRegenSonnig" end time: Feb 14 16:30 CET
+"testLampeOhneRegenSonnig" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/34 Testing: testLampeOhneRegenBewoelkt
+27/34 Test: testLampeOhneRegenBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeOhneRegenBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testLampeOhneRegenBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='1'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeOhneRegenBewoelkt" end time: Feb 14 16:30 CET
+"testLampeOhneRegenBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/34 Testing: testLampeOhneRegenStarkBewoelkt
+28/34 Test: testLampeOhneRegenStarkBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeOhneRegenStarkBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testLampeOhneRegenStarkBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='2'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeOhneRegenStarkBewoelkt" end time: Feb 14 16:30 CET
+"testLampeOhneRegenStarkBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/34 Testing: testLampeOhneRegenDunkel
+29/34 Test: testLampeOhneRegenDunkel
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeOhneRegenDunkel"
+Directory: /home/qhuang/templateV2/template
+"testLampeOhneRegenDunkel" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='3'
+
+200 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeOhneRegenDunkel" end time: Feb 14 16:30 CET
+"testLampeOhneRegenDunkel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/34 Testing: testLampeMitRegenSonnig
+30/34 Test: testLampeMitRegenSonnig
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeMitRegenSonnig"
+Directory: /home/qhuang/templateV2/template
+"testLampeMitRegenSonnig" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='0'
+[200 ms / 4](TestBench): Setting 'regen'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeMitRegenSonnig" end time: Feb 14 16:30 CET
+"testLampeMitRegenSonnig" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/34 Testing: testLampeMitRegenbewoelkt
+31/34 Test: testLampeMitRegenbewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeMitRegenbewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testLampeMitRegenbewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='1'
+[200 ms / 5](TestBench): Setting 'regen'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeMitRegenbewoelkt" end time: Feb 14 16:30 CET
+"testLampeMitRegenbewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/34 Testing: testLampeMitRegenStarkBewoelkt
+32/34 Test: testLampeMitRegenStarkBewoelkt
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeMitRegenStarkBewoelkt"
+Directory: /home/qhuang/templateV2/template
+"testLampeMitRegenStarkBewoelkt" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='2'
+[200 ms / 5](TestBench): Setting 'regen'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeMitRegenStarkBewoelkt" end time: Feb 14 16:30 CET
+"testLampeMitRegenStarkBewoelkt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/34 Testing: testLampeMitRegenDunkel
+33/34 Test: testLampeMitRegenDunkel
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeMitRegenDunkel"
+Directory: /home/qhuang/templateV2/template
+"testLampeMitRegenDunkel" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='3'
+[200 ms / 5](TestBench): Setting 'regen'='1'
+
+300 ms
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeMitRegenDunkel" end time: Feb 14 16:30 CET
+"testLampeMitRegenDunkel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/34 Testing: testLampeMitUndOhneRegen
+34/34 Test: testLampeMitUndOhneRegen
+Command: "/home/qhuang/templateV2/template/ha2" "testLampeMitUndOhneRegen"
+Directory: /home/qhuang/templateV2/template
+"testLampeMitUndOhneRegen" start time: Feb 14 16:30 CET
+Output:
+----------------------------------------------------------
+
+        SystemC 2.3.3-Accellera --- Jan 11 2022 14:30:47
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+
+Warning: (W116) channel doesn't have a default event
+In file: ../../../src/sysc/communication/sc_interface.cpp:54
+[100 ms / 2](TestBench): Setting 'wetter'='0'
+[200 ms / 4](TestBench): Setting 'regen'='1'
+[900 ms / 8](TestBench): Setting 'regen'='0'
+
+1 s
+
+Test PASSED
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testLampeMitUndOhneRegen" end time: Feb 14 16:30 CET
+"testLampeMitUndOhneRegen" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Feb 14 16:30 CET

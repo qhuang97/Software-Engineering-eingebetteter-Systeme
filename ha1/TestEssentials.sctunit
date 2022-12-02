@@ -1,0 +1,866 @@
+testclass TestEssentials for statechart ha01{
+
+/* Das sind die Testfälle für das Basisverhalten der Versorungsanlage.
+ * Sie sind die Mindestanforderungen an euer Modell.
+ * Euer Modell muss alle Tests bestehen, damit ihr auf diese Aufgabe Punkte bekommt.
+ * 
+ * Bei Fragen könnt ihr gern in die Sprechstunden kommen (siehe Isis).
+ */
+
+	
+//=========================================================================================================================
+//Bewässerungssystem (Bewässerung)
+//=========================================================================================================================
+
+	@Test //test 1
+	/* Wir testen, ob die Pflanzen ohne Regen korrekt bewässert werden.
+	 * 
+	 * -Kürbisse: Kürbisse haben große Blätter und verbrauchen insbesondere an warmen Tagen sehr viel Flüssigkeit. 
+	 * -Deswegen wird das Gießintervall abhängig von der Außentemperatur gesteuert:
+	 *	∗ Beträgt die Außentemperatur zum Zeitpunkt der Bewässerung mehr als 30°, wird erneut nach 6 Minuten bewässert.
+	 *	∗ Beträgt die Außentemperatur zum Zeitpunkt der Bewässerung 30°oder weniger, wird erneut nach 8 Minuten bewässert.
+	 * 
+	 * -Feldsalat: Feldsalat hat kleinere Blätter als der Kürbis. Er benötigt alle 11 Minuten Wasser, unabhängig von der Außentemperatur.
+	 * -Auberginen: Auberginen haben einen enormen Wasserbedarf und müssen alle 95 Sekunden bewässert werden.
+	 */
+	operation testBewaesserungOhneRegen(){
+		enter
+
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 3600) {									//3600 Iterationen um eine Stunde Laufzeit zu testen
+			if (i > 0){										//nullten Zeitschritt ausschließen
+				if (i % 95 == 0){							//alle 95s sollen die Auberginen bewässert werden
+					assert Gewaechshaus.bewaessern			//Auberginen sollten jetzt bewaessert werden
+				}
+				if (i % (8 * 60) == 0){						//alle 8 Minuten sollen die Kürbisse bewässert werden
+					assert Kuerbisfeld.bewaessern			//Kürbisse sollten jetzt bewässert werden
+				}
+				if (i % (11 * 60) == 0){					//alle 11 Minuten soll der Feldsalat bewässert werden
+					assert Salatfeld.bewaessern				//Feldsalat sollte jetzt bewässert werden
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		exit
+	}
+	
+	@Test //test 2
+	/* Wir testen, ob die Kürbisse ohne Regen bei 33°C korrekt bewässert werden.
+	 * 
+	 * -Kürbisse: Kürbisse haben große Blätter und verbrauchen insbesondere an warmen Tagen sehr viel Flüssigkeit. 
+	 * -Deswegen wird das Gießintervall abhängig von der Außentemperatur gesteuert:
+	 *	∗ Beträgt die Außentemperatur zum Zeitpunkt der Bewässerung mehr als 30°, wird erneut nach 6 Minuten bewässert.
+	 *	∗ Beträgt die Außentemperatur zum Zeitpunkt der Bewässerung 30°oder weniger, wird erneut nach 8 Minuten bewässert.
+	 */
+	operation TestBewaesserung30Grad() {
+		enter
+		
+		proceed 480s										//480s = 8 * 60s = 8 Minuten warten, Kürbisse sollten bewässert werden
+		assert Kuerbisfeld.bewaessern						//Kürbisse sollten jetzt bewässert werden; aktuelle Temperatur: 20°C
+		
+		proceed 480s										//480s = 8 * 60s = 8 Minuten warten, Kürbisse sollten bewässert werden
+		assert Kuerbisfeld.bewaessern						//Kürbisse sollten jetzt bewässert werden; aktuelle Temperatur: 20°C
+		
+		proceed 61s											//eine Minute warten; Simulationszeit: 17:01.0 
+		
+		Wetter.temperatur = 33								//es sind 33°C
+		raise Wetter.temperatur_aenderung					//aktuelle Temperatur: 33°C
+		
+		proceed 419s										//420s = 7 * 60s = 7 Minuten warten; Simulationszeit: 24:00.0
+		assert Kuerbisfeld.bewaessern						//Kürbisse sollten jetzt bewässert werden; aktuelle Temperatur: 33°C
+		
+		proceed 360s										//360s = 6 * 60s = 6 Minuten warten; Simulationszeit: 30:00.0
+		assert Kuerbisfeld.bewaessern						//Kürbisse sollten jetzt bewässert werden
+				
+		exit
+	}
+	
+	@Test //test 3
+	/* Wir testen, ob die Pflanzen mit vorangegangem Regen korrekt bewässert werden.
+	 * -Das Bewässerungssystem (BWS) kann für Kürbisse und Feldsalat aktiv und inaktiv sein. 
+	 * -Wenn es regnet, ist das BWS auf den Feldern inaktiv. Regnet es nicht, ist es dort aktiv. 
+	 * -Im Gewächshaus ist das BWS immer aktiv.
+	 * -Die Gießintervalle beginnen immer mit Aktivierung des BWS für das jeweilige Gemüse. 
+	 * -Beispiel: es hört soeben auf zu regnen. Der Regen beginnt danach nicht erneut. 
+	 * -Das BWS für den Feldsalat wird mit Ende des Regens aktiv und bewässert den Salat 11, 22, 33, usw. Minuten nach Ende des Regens.
+	 */
+	operation testBewaesserungMitPreRegen(){
+		enter
+		
+		raise Wetter.regen_start							//es beginnt zu regnen
+		proceed 3s											//3s Regen als Offset
+		raise Wetter.regen_ende								//es hört auf zu regnen
+
+		var i: integer = 3									//Laufvariable für Schleife
+		while (i < 3003) {									//3000 Iterationen um 50 Minuten Laufzeit zu testen
+			if ((i - 3) > 0){								//nullten Zeitschritt ausschließen
+				if (i % 95 == 0){							//alle 95s sollen die Auberginen bewässert werden
+					assert Gewaechshaus.bewaessern			//Auberginen sollten jetzt bewaessert werden
+				}
+				if ((i - 3) % (8 * 60) == 0){				//alle 8 Minuten sollen die Kürbisse bewässert werden
+					assert Kuerbisfeld.bewaessern			//Kürbisse sollten jetzt bewässert werden
+				}
+				if ((i - 3) % (11 * 60) == 0){				//alle 11 Minuten soll der Feldsalat bewässert werden
+					assert Salatfeld.bewaessern				//Feldsalat sollte jetzt bewässert werden
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		exit
+	}
+	
+	@Test //test 4
+	/* Wir testen, ob die Pflanzen mit Regen zwischendurch korrekt bewässert werden.
+	 * -Das Bewässerungssystem (BWS) kann für Kürbisse und Feldsalat aktiv und inaktiv sein. 
+	 * -Wenn es regnet, ist das BWS auf den Feldern inaktiv. Regnet es nicht, ist es dort aktiv. 
+	 * -Im Gewächshaus ist das BWS immer aktiv.
+	 * -Die Gießintervalle beginnen immer mit Aktivierung des BWS für das jeweilige Gemüse. 
+	 * -Beispiel: es hört soeben auf zu regnen. Der Regen beginnt danach nicht erneut. 
+	 * -Das BWS für den Feldsalat wird mit Ende des Regens aktiv und bewässert den Salat 11, 22, 33, usw. Minuten nach Ende des Regens.
+	 */
+	operation testBewaesserungMitMidRegen(){
+		enter
+
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 665) {									//665 Iterationen um 7 * 95 Sekunden Laufzeit zu testen
+			if (i > 0){										//nullten Zeitschritt ausschließen
+				if (i % 95 == 0){							//alle 95s sollen die Auberginen bewässert werden
+					assert Gewaechshaus.bewaessern			//Auberginen sollten jetzt bewaessert werden
+				}
+				if (i % (8 * 60) == 0){						//alle 8 Minuten sollen die Kürbisse bewässert werden
+					assert Kuerbisfeld.bewaessern			//Kürbisse sollten jetzt bewässert werden
+				}
+				if (i % (11 * 60) == 0){					//alle 11 Minuten soll der Feldsalat bewässert werden
+					assert Salatfeld.bewaessern				//Feldsalat sollte jetzt bewässert werden
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden 
+		raise Wetter.regen_start							//es beginnt zu regnen
+		
+		proceed 94900ms										//nach 665 + 95s = 760s = 8 * 95s sollten die Auberginen bewässert werden
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		
+		raise Wetter.regen_ende								//Es hört auf zu regnen
+		i = 0
+		while (i < 665) {									//665 Iterationen um 7 * 95 weitere Sekunden Laufzeit zu testen
+			if (i > 0){										//nullten Zeitschritt ausschließen
+				if (i % 95 == 0){							//alle 95s sollen die Auberginen bewässert werden
+					assert Gewaechshaus.bewaessern			//Auberginen sollten jetzt bewaessert werden
+				}
+				if (i % (8 * 60) == 0){						//alle 8 Minuten sollen die Kürbisse bewässert werden
+					assert Kuerbisfeld.bewaessern			//Kürbisse sollten jetzt bewässert werden
+				}
+				if (i % (11 * 60) == 0){					//alle 11 Minuten soll der Feldsalat bewässert werden
+					assert Salatfeld.bewaessern				//Feldsalat sollte jetzt bewässert werden
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		exit
+	}
+	
+	@Test //test 5
+	/* Wir testen, ob die Pflanzen mit dauerhaftem Regen korrekt bewässert werden.
+	 * -Das Bewässerungssystem (BWS) kann für Kürbisse und Feldsalat aktiv und inaktiv sein. 
+	 * -Wenn es regnet, ist das BWS auf den Feldern inaktiv. Regnet es nicht, ist es dort aktiv. 
+	 * -Im Gewächshaus ist das BWS immer aktiv.
+	 */
+	operation testBewaesserungMitDauerRegen(){
+		enter
+
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden 
+		raise Wetter.regen_start							//es beginnt zu regnen
+		proceed 900ms										//900ms warten um wieder auf eine ganze Sekunde zu kommen
+
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 3600) {									//3600 Iterationen um eine Stunde Laufzeit zu testen
+			if (i > 1){										//nullten Zeitschritt ausschließen
+				if ((i + 1) % 95 == 0){						//alle 95s sollen die Auberginen bewässert werden
+					assert Gewaechshaus.bewaessern			//Auberginen sollten jetzt bewaessert werden
+				}
+				if ((i + 1) % (8 * 60) == 0){				//alle 8 Minuten sollen die Kürbisse bewässert werden
+					assert !Kuerbisfeld.bewaessern			//Kürbisse sollten jetzt nicht bewässert werden (weil es regnet)
+				}
+				if ((i + 1) % (11 * 60) == 0){				//alle 11 Minuten soll der Feldsalat bewässert werden
+					assert !Salatfeld.bewaessern			//Feldsalat sollte jetzt nicht bewässert werden (weil es regnet)
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		exit
+	}
+	
+//=========================================================================================================================
+//Bewässerungssystem (Wassertank)
+//=========================================================================================================================
+	
+	@Test //test 6
+	/* Wir testen, ob die Warnlampe bei 500ml an ist und bei 1000ml aus ist.
+	 * -Wenn der Füllstand des Tanks unter 1000 ml liegt, soll eine Warnlampe leuchten (Wassertank.warnlampe = true). 
+	 * -Beträgt der Füllstand mindestens 1 L, soll die Warnlampe nicht leuchten (Wassertank.warnlampe = false)
+	 */
+	operation testWarnlampeAusAn(){
+		enter
+	
+		raise Wassertank.auffuellen_500ml					//500ml auffüllen, Tankinhalt ist 500ml
+		assert Wassertank.warnlampe == true					//Tankinhalt ist 500ml => die Warnlampe sollte an sein
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_500ml					//500ml auffüllen, Tankinhalt ist 1000ml
+		assert Wassertank.warnlampe == false				//Tankinhalt ist 1000ml => die Warnlampe sollte aus sein
+		
+		exit
+	}
+	
+	@Test //test 7
+	/* Wir testen anhand der Warnlampe, ob sich der Tank korrekt mit Wasser füllt.
+	 * -Jede Bewässerung verbraucht 1000 ml.
+	 * -Beginnt es zu regnen, füllt sich der Wassertank alle 95 Sekunden um 100 ml, bis der Regen endet.
+	 * -Auberginen haben einen enormen Wasserbedarf und müssen alle 95 Sekunden bewässert werden.
+	 */
+	operation testWarnlampeRegenLoop(){
+		enter
+	
+		assert Wassertank.warnlampe == true					//Tankinhalt ist 0ml => die Warnlampe sollte an sein
+		proceed 100ms										//100ms warten um Signalkollisionen zu vermeiden
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Wassertank.warnlampe == true					//Tankinhalt ist 0ml => die Warnlampe sollte an sein
+		
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 9) {										//9 Iterationen
+			raise Wassertank.auffuellen_1000ml				//1000ml für Auberginenbewässerung
+			assert Wassertank.warnlampe == false			//Tankinhalt ist mind. 1000ml => die Warnlampe sollte aus sein
+			proceed 95s										//95s warten, -1000ml (Auberginen werden bewässert), +100ml (Regen)
+			assert Wassertank.warnlampe == true				//Tankinhalt is (i+1) * 100ml <= 900ml => die Warnlampe sollte immer aus sein
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		raise Wassertank.auffuellen_1000ml					//1000ml für Auberginenbewässerung
+		assert Wassertank.warnlampe == false				//Tankinhalt ist 1900ml => die Warnlampe sollte aus sein
+		proceed 95s											//95s warten, -1000ml (Auberginen werden bewässert), +100ml (Regen)
+		assert Wassertank.warnlampe == false				//Tankinhalt ist 1000ml => die Warnlampe sollte aus sein
+		
+		exit
+	}
+	
+	@Test //test 8
+	/* Wir testen, anhand der Warnlampe, ob der Tank wirklich nur bis 5000ml gefüllt werden kann.
+	 * -Der Wassertank hat eine Kapazität von 5000 ml. Initial ist der Tank leer.
+	 */
+	operation testOverflowBauer(){
+		enter
+	
+		raise Wassertank.auffuellen_500ml					//500ml auffüllen, Tankinhalt ist 500ml
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_1000ml					//1000ml auffüllen, Tankinhalt ist 1500ml
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_1000ml					//1000ml auffüllen, Tankinhalt ist 2500ml
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_1000ml					//1000ml auffüllen, Tankinhalt ist 3500ml
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_1000ml					//1000ml auffüllen, Tankinhalt ist 4500ml
+		proceed 100ms										//kurz warten
+		raise Wassertank.auffuellen_1000ml					//1000ml auffüllen, Tankinhalt ist 5000ml
+		proceed 500ms										//kurz warten
+		
+		proceed 94s											//nach 95s sollten die Auberginen bewässert werden, Tankinhalt 4000ml
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		proceed 95s											//nach 2 * 95s = 190s sollten die Auberginen bewässert werden, Tankinhalt 3000ml
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		proceed 95s											//nach 3 * 95s = 285s sollten die Auberginen bewässert werden, Tankinhalt 2000ml
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		proceed 95s											//nach 4 * 95s = 380s sollten die Auberginen bewässert werden, Tankinhalt 1000ml
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		
+		assert Wassertank.warnlampe == false				//Tankinhalt = 1000ml => die Warnlampe sollte aus sein
+		
+		proceed 95s											//nach 5 * 95s = 475s sollten die Auberginen bewässert werden, Tankinhalt 0ml
+		assert Gewaechshaus.bewaessern						//Auberginen sollten jetzt bewässert werden
+		
+		assert Wassertank.warnlampe == true					//Tankinhalt ist 0ml => die Warnlampe sollte an sein
+		proceed 100ms										//100ms warten um Signalkollisionen zu vermeiden
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Wassertank.warnlampe == true					//Tankinhalt ist 0ml => die Warnlampe sollte an sein
+		
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 9) {										//9 Iterationen
+			raise Wassertank.auffuellen_1000ml				//1000ml für Auberginenbewässerung
+			assert Wassertank.warnlampe == false			//Tankinhalt ist mind. 1000ml => die Warnlampe sollte aus sein
+			proceed 95s										//95s warten, -1000ml (Auberginen werden bewässert), +100ml (Regen)
+			assert Wassertank.warnlampe == true				//Tankinhalt is (i+1) * 100ml <= 900ml => die Warnlampe sollte immer aus sein
+			i = i + 1										//Zählervariable erhöhen
+		}
+		proceed 1s											//kurz warten
+		
+		raise Wassertank.auffuellen_1000ml					//1000ml für Auberginenbewässerung
+		assert Wassertank.warnlampe == false				//Tankinhalt ist 1900ml => die Warnlampe sollte aus sein
+		proceed 94s											//95s warten, -1000ml (Auberginen werden bewässert), +100ml (Regen)
+		assert Wassertank.warnlampe == false				//Tankinhalt ist 1000ml => die Warnlampe sollte aus sein
+		
+		exit
+	}
+	
+//=========================================================================================================================
+//Pflanzenschutzsystem
+//=========================================================================================================================
+	
+	@Test //test 9
+	/* Wir testen, ob auf dem Kürbisfeld bei Blattlausbefall der Pflanzenschutz korrekt versprüht wird.
+	 * -hin und wieder werden Kürbisse von Blattläusen befallen. Wird ein Befall gemeldet, wird sofort Pflanzenschutzmittel eingesetzt.
+	 */
+	operation testBlattlaeuseKuerbisfeld(){
+		enter
+		
+		raise Kuerbisfeld.blattlaeuse						//Blattlausbefall auf dem Kürbisfeld
+		assert Kuerbisfeld.pflanzenschutz					//das Gift sollte sofort versprüht werden
+		
+		exit
+	}
+	
+	@Test //test 10
+	/* Wir testen, ob auf dem Salatfeld bei Blattlausbefall der Pflanzenschutz korrekt versprüht wird.
+	 * -Wird ein Befall mit Blattläusen gemeldet, wird sofort Pflanzenschutzmittel eingesetzt.
+	 */
+	operation testBlattlaeuseSalatfeld(){
+		enter
+		
+		raise Salatfeld.blattlaeuse							//Blattlausbefall auf dem Salatfeld
+		assert Salatfeld.pflanzenschutz						//das Gift sollte sofort versprüht werden
+		
+		exit
+	}
+	
+	@Test //test 11
+	/* Wir testen, ob auf dem Salatfeld bei Schneckenbefall der Pflanzenschutz korrekt versprüht wird.
+	 * -Wird ein Befall mit Schnecken gemeldet, wird sofort und 20 Sekunden danach Pflanzenschutzmittel eingesetzt.
+	 */
+	operation testSchneckenSalatfeld(){
+		enter
+		
+		raise Salatfeld.schnecken							//Schneckenbefall auf dem Salatfeld
+		assert Salatfeld.pflanzenschutz						//das Gift sollte sofort versprüht werden
+		
+		proceed 20s											//nach 20s sollte noch ein weiteres Mal Gift versprüht werden
+		
+		assert Salatfeld.pflanzenschutz						//das Gift sollte jetzt versprüht werden
+		
+		exit
+	}
+
+//=========================================================================================================================
+//Düngungssystem
+//=========================================================================================================================	
+	
+	@Test //test 12
+	/* Wir testen, ob die Pflanzen ohne Regen korrekt gedünkt werden.
+	 * -Kürbisse: Kürbisse müssen alle 13 Minuten gedüngt werden.
+	 * -Feldsalat: Feldsalat muss nur alle 25 Minuten gedüngt werden.
+	 * -Auberginen: Auberginen müssen alle 17 Minuten gedüngt werden.
+	 */
+	operation testDuengungOhneRegen(){
+		enter
+
+		var i: integer = 0									//Laufvariable für Schleife
+		while (i < 3600) {									//3600 Iterationen um eine Stunde Laufzeit zu testen
+			if (i > 0){										//nullten Zeitschritt ausschließen
+				if (i % (13 * 60) == 0){					//alle 13 Minuten sollen die Kürbisse gedüngt werden
+					assert Kuerbisfeld.duengen				//Kürbisse sollten jetzt gedüngt werden
+				}
+				if (i % (17 * 60) == 0){					//alle 17 Minuten sollen die Auberginen gedünkt werden
+					assert Gewaechshaus.duengen				//Auberginen sollten jetzt gedüngt werden
+				}
+				if (i % (25 * 60) == 0){					//alle 25 Minuten soll der Feldsalat gedünkt werden
+					assert Salatfeld.duengen				//Feldsalat sollte jetzt gedünkt werden
+				}
+			}
+			proceed 1s										//1s warten um in den nächsten Zeitschritt zu kommen
+			i = i + 1										//Zählervariable erhöhen
+		}
+		
+		exit
+	}	
+	
+	@Test //test 13
+	/* Wir testen, ob die Pflanzen mit Regen korrekt bewässert werden.
+	 * -Kürbisse sind Starkzehrer und müssen kontinuierlich mit Nährstoffen versorgt werden. 
+	 * -Regnet es 10 Minuten ohne Unterbrechung, beginnt deswegen ein besonderer Starkdüngemodus. 
+	 * -Dieser verhindert, dass die Nährstoffe aus dem Boden gewaschen werden:
+	 * -Der Starkdüngemodus überschreibt das normale Düngeintervall. 
+	 * -Er löst bei Aktivierung sofort eine Düngung aus und dann alle 5 Minuten.
+	 * -Der Starkdüngemodus endet, sobald der Regen endet. 
+	 * -Anders als das Gießintervall beim BWS wird das Düngungsintervall bei Ende des Regens nicht zurückgesetzt. 
+	 * -Die nächste Düngung würde also 13 Minuten nach der letzten Düngung erfolgen, sofern es in dieser Zeit nicht mindestens 10 Minuten regnet.
+	 */
+	operation testDuengungMitRegen(){
+		enter
+		
+		proceed 780s										//nach 780s = 13 * 60s = 13 Minuten sollen die Kürbisse gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 240s										//nach 780s + 240s = 1020s = 17 Minuten sollen die Auberginen gedünkt werden
+		assert Gewaechshaus.duengen							//Auberginen sollten jetzt gedüngt werden
+		proceed 480s										//nach 1020s + 480s = 1500s = 25 Minuten soll der Feldsalat gedünkt werden
+		assert Salatfeld.duengen							//Feldsalat sollte jetzt gedünkt werden
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden 
+		raise Wetter.regen_start							//es beginnt zu regnen
+		proceed 900ms										//900ms warten um wieder auf eine ganze Sekunde zu kommen
+		
+		proceed 59s											//nach 25 + 1 = 26 Minuten sollten wieder die Kürbisse gedünkt werden; 59.9s nach Regenstart
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+	
+		proceed 480s										//weitere 8 Minuten vergehen, nach 34 Minuten sollen die Auberginen wieder gedünkt werden; 08:59.9 nach Regenstart
+		assert Gewaechshaus.duengen							//Auberginen sollten jetzt gedüngt werden
+		
+		proceed 100ms										//100ms vergehen, 34:00.1 nach Simulationsstart; 09:00.0 nach Regenstart
+		proceed 60s											//60s vergehen, 35:00.1 nach Simulationsstart; 10:00.0 nach Regenstart => jetzt sollen die Kürbisse gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 300s										//5 Minuten vergehen, 40:00.1 nach Simulationsstart; 15:00.0 nach Regenstart => jetzt sollen die Kürbisse gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		exit
+	}
+	
+	@Test //test 14
+	/* Wir testen, ob die Pflanzen mit andauerndem Regen korrekt bewässert werden.
+	 * -Kürbisse sind Starkzehrer und müssen kontinuierlich mit Nährstoffen versorgt werden. 
+	 * -Regnet es 10 Minuten ohne Unterbrechung, beginnt deswegen ein besonderer Starkdüngemodus. 
+	 * -Dieser verhindert, dass die Nährstoffe aus dem Boden gewaschen werden:
+	 * -Der Starkdüngemodus überschreibt das normale Düngeintervall. 
+	 * -Er löst bei Aktivierung sofort eine Düngung aus und dann alle 5 Minuten.
+	 * -Der Starkdüngemodus endet, sobald der Regen endet. 
+	 * -Anders als das Gießintervall beim BWS wird das Düngungsintervall bei Ende des Regens nicht zurückgesetzt. 
+	 * -Die nächste Düngung würde also 13 Minuten nach der letzten Düngung erfolgen, sofern es in dieser Zeit nicht mindestens 10 Minuten regnet.
+	 */
+	operation testDuengungMitDauerRegen(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.regen_start							//es beginnt zu regnen
+		
+		proceed 600s										//nach 10 Minuten Regen sollten die Kürbisse gedünkt werden; 10:00.1 nach Simulationsstart
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 300s										//nach 10 + 5 = 15 Minuten sollten die Kürbisse wieder gedünkt werden; 15:00.1 nach Simulationsstart
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 300s										//nach 15 + 5 = 20 Minuten sollten die Kürbisse wieder gedünkt werden; 20:00.1 nach Simulationsstart
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 60s											//nach 20 + 1 = 21 Minuten sollte der Feldsalat gedünkt werden; 21:00.1 nach Simulationsstart
+		proceed 900ms										//21:01.0 nach Simulationsstart
+		proceed 239s										//25:00.0 nach Simulationsstart
+		assert Salatfeld.duengen							//Feldsalat sollte jetzt gedünkt werden
+		proceed 100ms										//nach 21 + 4 = 25 Minuten sollten die Kürbisse wieder gedünkt werden; 25:00.1 nach Simulationsstart
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		
+		exit
+	}
+
+	@Test //test 15
+	/* Wir testen, ob die Pflanzen mit vorangegangem Regen korrekt bewässert werden.
+	 * -Kürbisse sind Starkzehrer und müssen kontinuierlich mit Nährstoffen versorgt werden. 
+	 * -Regnet es 10 Minuten ohne Unterbrechung, beginnt deswegen ein besonderer Starkdüngemodus. 
+	 * -Dieser verhindert, dass die Nährstoffe aus dem Boden gewaschen werden:
+	 * -Der Starkdüngemodus überschreibt das normale Düngeintervall. 
+	 * -Er löst bei Aktivierung sofort eine Düngung aus und dann alle 5 Minuten.
+	 * -Der Starkdüngemodus endet, sobald der Regen endet. 
+	 * -Anders als das Gießintervall beim BWS wird das Düngungsintervall bei Ende des Regens nicht zurückgesetzt. 
+	 * -Die nächste Düngung würde also 13 Minuten nach der letzten Düngung erfolgen, sofern es in dieser Zeit nicht mindestens 10 Minuten regnet.
+	 */
+	operation testDuengungNachRegen(){
+		enter
+		
+		raise Wetter.regen_start							//es beginnt zu regnen
+		proceed 600s										//nach 10 Minuten Regen sollten die Kürbisse gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 300s										//nach 10 + 5 = 15 Minuten sollten die Kürbisse wieder gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+	
+		proceed 1s
+		raise Wetter.regen_ende								//es hört auf zu regnen
+		proceed 599s
+		assert Salatfeld.duengen
+		proceed 180s										//nach 780s = 13 Minuten sollten die Kürbisse wieder gedünkt werden
+		assert Kuerbisfeld.duengen							//Kürbisse sollten jetzt gedüngt werden
+		proceed 1320s										//nach 25 Minuten sollte der Feldsalat wieder gedünkt werden
+		assert Salatfeld.duengen							//Feldsalat sollte jetzt gedünkt werden
+		
+		exit
+	}
+	
+//=========================================================================================================================
+//Klimasteuerung (Heizung)
+//=========================================================================================================================	
+
+	@Test //test 16
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von über 30°C und bei sonnigem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperaturUeber30GradSonnig(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		Wetter.temperatur = 31								//Temperatur ist 31°C
+		raise Wetter.temperatur_aenderung					//Temperaturveränderung
+		
+		raise Wetter.sonnig									//es ist sonnig
+		assert Gewaechshaus.heizung == 0					//Heizung sollte aus sein
+		
+		exit
+	}
+	
+	@Test //test 17
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von über 30°C und bei Regen korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperaturUeber30GradRegen(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		Wetter.temperatur = 31								//Temperatur ist 31°C
+		raise Wetter.temperatur_aenderung					//Temperaturveränderung
+		
+		raise Wetter.regen_start							//es ist stark bewölkt
+		assert Gewaechshaus.heizung == 1					//Heizung sollte auf Stufe 1 sein
+		
+		exit
+	}
+	
+	@Test //test 18
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von über 30°C und bei bewölktem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperaturUeber30GradBewoelkt(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		Wetter.temperatur = 31								//Temperatur ist 31°C
+		raise Wetter.temperatur_aenderung					//Temperaturveränderung
+		
+		raise Wetter.bewoelkt								//es ist bewölkt
+		assert Gewaechshaus.heizung == 0					//Heizung sollte aus sein
+		
+		exit
+	}
+	
+	@Test //test 19
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von über 30°C und bei stark bewölktem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperaturUeber30GradStarkBewoelkt(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		Wetter.temperatur = 31								//Temperatur ist 31°C
+		raise Wetter.temperatur_aenderung					//Temperaturveränderung
+		
+		raise Wetter.stark_bewoelkt							//es ist stark bewölkt
+		assert Gewaechshaus.heizung == 1					//Heizung sollte auf Stufe 1 sein
+		
+		exit
+	}
+	
+	@Test //test 20
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von über 30°C und bei Dunkelheit korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperaturUeber30GradDunkel(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		Wetter.temperatur = 31								//Temperatur ist 31°C
+		raise Wetter.temperatur_aenderung					//Temperaturveränderung
+		
+		raise Wetter.dunkel									//es ist dunkel
+		assert Gewaechshaus.heizung == 2					//Heizung sollte auf Stufe 2 sein
+		
+		exit
+	}
+	
+	@Test //test 21
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von 20°C und bei sonnigem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperatur30GradSonnig(){
+		enter
+			
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.sonnig									//es ist sonnig
+		assert Gewaechshaus.heizung == 1					//Heizung sollte auf Stufe 1 sein
+		
+		exit
+	}
+	
+	@Test //test 22
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von 20°C und bei Regen korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperatur30GradRegen(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.regen_start							//es ist stark bewölkt
+		assert Gewaechshaus.heizung == 3					//Heizung sollte auf Stufe 3 sein
+		
+		exit
+	}
+	
+	@Test //test 23
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von 20°C und bei bewölktem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperatur30GradBewoelkt(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.bewoelkt								//es ist bewölkt
+		assert Gewaechshaus.heizung == 2					//Heizung sollte auf Stufe 2 sein
+		
+		exit
+	}
+	
+	@Test //test 24
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von 20°C und bei stark bewölktem Wetter korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperatur30GradStarkBewoelkt(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden		
+		raise Wetter.stark_bewoelkt							//es ist stark bewölkt
+		assert Gewaechshaus.heizung == 3					//Heizung sollte auf Stufe 3 sein
+		
+		exit
+	}
+	
+	@Test //test 25
+	/* Wir testen, ob die Heizung bei einer Außentemperatur von 20°C und bei Dunkelheit korrekt funktioniert.
+	 * -Außentemperatur > 30 °C:
+	 * 	-Wenn es sonnig oder bewölkt ist, soll nicht geheizt werden.
+	 ∗ 	-Wenn es regnet oder stark bewölkt ist, soll Stufe 1 gewählt werden.
+	 ∗ 	-Wenn es dunkel ist, soll Stufe 2 gewählt werden.
+	 */
+	operation testTemperatur30GradDunkel(){
+		enter
+		
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.dunkel									//es ist dunkel
+		assert Gewaechshaus.heizung == 4					//Heizung sollte auf Stufe 4 sein
+		
+		exit
+	}
+	
+//=========================================================================================================================
+//Klimasteuerung (Lampe)
+//=========================================================================================================================	
+	
+	
+	@Test //test 26
+	/* Wir testen, ob die Lampe ohne Regen bei sonnigem Wetter korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeOhneRegenSonnig(){
+		enter
+		
+		raise Wetter.sonnig									//draußen ist es sonnig
+		assert Gewaechshaus.lampe == 0						//4 + 0 = 4 >= 3
+		
+		exit
+	}
+	
+	@Test //test 27
+	/* Wir testen, ob die Lampe ohne Regen bei bewölktem Wetter korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeOhneRegenBewoelkt(){
+		enter
+		
+		raise Wetter.bewoelkt								//draußen ist es bewölkt
+		assert Gewaechshaus.lampe == 0						//3 + 0 = 3 >= 3
+		
+		
+		exit
+	}
+	
+	@Test //test 28
+	/* Wir testen, ob die Lampe ohne Regen bei stark bewölktem Wetter korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeOhneRegenStarkBewoelkt(){
+		enter
+		
+		raise Wetter.stark_bewoelkt							//draußen ist es stark bewölkt
+		assert Gewaechshaus.lampe == 2						//1 + 2 = 3 >= 3
+		
+		exit
+	}
+	
+	@Test //test 29
+	/* Wir testen, ob die Lampe ohne Regen bei Dunkelheit korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeOhneRegenDunkel(){
+		enter
+		
+		raise Wetter.dunkel									//draußen ist es stark bewölkt
+		assert Gewaechshaus.lampe == 3						//0 + 3 = 3 >= 3
+		
+		exit
+	}
+	
+	@Test //test 30
+	/* Wir testen, ob die Lampe bei sonnigem Wetter mit Regen korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeMitRegenSonnig(){
+		enter
+	
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.sonnig									//draußen ist es sonnig
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Gewaechshaus.lampe == 1						//2 + 1 = 3 >= 3
+		
+		exit
+	}
+	
+	@Test //test 31
+	/* Wir testen, ob die Lampe bei bewölktem Wetter mit Regen korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeMitRegenBewoelkt(){
+		enter
+	
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.bewoelkt								//draußen ist es bewölkt
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Gewaechshaus.lampe == 1						//2 + 1 = 3 >= 3
+		
+		exit
+	}
+	
+	@Test //test 32
+	/* Wir testen, ob die Lampe bei stark bewölktem Wetter mit Regen korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeMitRegenStarkBewoelkt(){
+		enter
+	
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.stark_bewoelkt							//draußen ist es stark bewölkt
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Gewaechshaus.lampe == 3						//0 + 3 = 3 >= 3
+		
+		
+		exit
+	}
+	
+	@Test //test 33
+	/* Wir testen, ob die Lampe bei Dunkelheit mit Regen korrekt eingestellt ist.
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0).
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2.
+	 * -Wenn es regnet und es vorher stark bewölkt oder dunkel war, beträgt das Lichtlevel während des Regens 0.
+	 * -Das tatsächliche Lichtlevel im Gewächshaus ergibt sich aus der Summe der Helligkeitsstufe der Lampe und des Lichtlevels im Gewächshaus. 
+	 * -Das KS sorgt dafür, dass es zu jedem Zeitpunkt mindestens 3 beträgt. 
+	 * -Um Energie zu sparen, sollte die Helligkeit der Lampe außerdem so niedrig wie möglich sein.
+	 */
+	operation testLampeMitRegenDunkel(){
+		enter
+	
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.dunkel									//draußen ist es stark bewölkt
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Gewaechshaus.lampe == 3						//0 + 3 = 3 >= 3
+		
+		exit
+	}
+	
+	
+	@Test //test 34
+	/* Wir testen, ob die Lampe auch nach ende des Regens noch korrekt eingestellt ist
+	 * -Das aktuelle Wetter kann jederzeit durch Regen unterbrochen werden. Hört der Regen auf, tritt das vorherige Wetter wieder ein
+	 * -sonnig (Lichtlevel 4), bewölkt (Lichtlevel 3), stark bewölkt (Lichtlevel 1) oder dunkel (Lichtlevel 0)
+	 * -Wenn es regnet und es vorher sonnig oder bewölkt war, beträgt das Lichtlevel während des Regens 2..
+	 */
+	operation testLampeMitUndOhneRegen(){
+		enter
+
+		proceed 100ms										//100ms warten um Signalkollision zu vermeiden
+		raise Wetter.sonnig									//draußen ist es sonnig
+		raise Wetter.regen_start							//es beginnt zu regnen
+		assert Gewaechshaus.lampe == 1						//2 + 1 = 3 >= 3
+		proceed 600ms										//kurz warten
+		raise Wetter.regen_ende								//es hört auf zu regnen
+		assert Gewaechshaus.lampe == 0						//4 + 0 = 4 >= 3
+		
+		exit
+	}
+		
+}
